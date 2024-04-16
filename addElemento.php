@@ -1,0 +1,32 @@
+<?php
+
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+
+include('./connection.php');
+
+if (!isset($_POST['id_coleccion'])
+    || !isset($_POST['id_usuario'])
+    || !isset($_POST['titulo'])
+    || !isset($_POST['autor'])
+    || !isset($_POST['id_api'])) {
+  $response = ['success' => false, 'message' => 'id_coleccion, id_usuario, titulo, autor and id_api are required'];
+} else {
+  $id_coleccion = $_POST['id_coleccion'];
+  $id_usuario = $_POST['id_usuario'];
+  $titulo = $_POST['titulo'];
+  $autor = $_POST['autor'];
+  $id_api = $_POST['id_api'];
+
+  $query = "INSERT INTO elementos (id_coleccion, id_usuario, titulo, autor, id_api) VALUES ('$id_coleccion', '$id_usuario', '$titulo', '$autor', '$id_api')";
+  $result = mysqli_query($connect, $query);
+
+  if ($result) {
+    $response = ['success' => true, 'message' => 'Elemento added successfully'];
+  } else {
+    $response = ['success' => false, 'message' => 'Something went wrong while adding the publicación'];
+  }
+}
+
+echo json_encode($response);
+?>
