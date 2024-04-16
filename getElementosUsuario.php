@@ -47,6 +47,7 @@ if (!isset($_GET['id_usuario']) ||!isset($_GET['coleccion'])) {
     'id_coleccion' => $row['id_coleccion'],
     'titulo' => $row['titulo'],
     'autor' => $row['autor'],
+    'imagen' => $row['imagen'],
     'id_api' => $row['id_api']
     );
   }
