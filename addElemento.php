@@ -10,7 +10,8 @@ if (!isset($_POST['id_coleccion'])
     || !isset($_POST['titulo'])
     || !isset($_POST['autor'])
     || !isset($_POST['imagen'])
-    || !isset($_POST['id_api'])) {
+    || !isset($_POST['id_api'])
+    || !isset($_POST['favorito'])) {
   $response = ['success' => false, 'message' => 'id_coleccion, id_usuario, titulo, autor, imagen and id_api are required'];
 } else {
   $id_coleccion = $_POST['id_coleccion'];
@@ -19,8 +20,9 @@ if (!isset($_POST['id_coleccion'])
   $autor = $_POST['autor'];
   $imagen = $_POST['imagen'];
   $id_api = $_POST['id_api'];
+  $favorito = $_POST['favorito'];
 
-  $query = "INSERT INTO elementos (id_coleccion, id_usuario, titulo, autor, imagen, id_api) VALUES ('$id_coleccion', '$id_usuario', '$titulo', '$autor', '$imagen', '$id_api')";
+  $query = "INSERT INTO elementos (id_coleccion, id_usuario, titulo, autor, imagen, id_api, favorito) VALUES ('$id_coleccion', '$id_usuario', '$titulo', '$autor', '$imagen', '$id_api', '$favorito')";
   $result = mysqli_query($connect, $query);
 
   if ($result) {

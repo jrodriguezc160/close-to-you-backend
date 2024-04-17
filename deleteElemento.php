@@ -5,12 +5,12 @@ header('Content-Type: application/json');
 
 include('./connection.php');
 
-if (!isset($_POST['id'])) {
-  $response = ['success' => false, 'message' => 'id is required'];
+if (!isset($_POST['id_api'])) {
+  $response = ['success' => false, 'message' => 'id_api is required'];
 } else {
-  $id = $_POST['id'];
+  $id_api = $_POST['id_api'];
 
-  $query = "DELETE from elementos where id='$id'";
+  $query = "DELETE from elementos where id_api='$id_api'";
   $result = mysqli_query($connect, $query);
 
   if ($result) {

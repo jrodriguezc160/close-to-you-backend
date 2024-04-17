@@ -5,8 +5,8 @@ header('Content-Type: application/json');
 
 include('./connection.php');
 
-if (!isset($_GET['id_usuario']) ||!isset($_GET['coleccion'])) {
-  $response = ['success' => false, 'message' => 'id_usuario is required'];
+if (!isset($_GET['id_usuario']) || !isset($_GET['coleccion'])) {
+  $response = ['success' => false, 'message' => 'id_usuario and coleccion are required'];
 } else {
 
   $id_usuario = $_GET['id_usuario'];
@@ -35,7 +35,14 @@ if (!isset($_GET['id_usuario']) ||!isset($_GET['coleccion'])) {
       break;
   }
 
-  $query = "SELECT * FROM elementos WHERE id_usuario='$id_usuario' and id_coleccion='$id_coleccion'";
+  // Construir la consulta SQL sin el campo 'favorito' si no se pasa en la URL
+  if (isset($_GET['favorito'])) {
+    $favorito = $_GET['favorito'];
+    $query = "SELECT * FROM elementos WHERE id_usuario='$id_usuario' and id_coleccion='$id_coleccion' and favorito='$favorito'";
+  } else {
+    $query = "SELECT * FROM elementos WHERE id_usuario='$id_usuario' and id_coleccion='$id_coleccion'";
+  }
+
   $result = mysqli_query($connect, $query);
   
   $publicaciones = array();
@@ -48,7 +55,8 @@ if (!isset($_GET['id_usuario']) ||!isset($_GET['coleccion'])) {
     'titulo' => $row['titulo'],
     'autor' => $row['autor'],
     'imagen' => $row['imagen'],
-    'id_api' => $row['id_api']
+    'id_api' => $row['id_api'],
+    'favorito' => $row['favorito']
     );
   }
   
