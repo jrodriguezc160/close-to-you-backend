@@ -20,7 +20,7 @@ if (!isset($_POST['id_coleccion'])
   $imagen = $_POST['imagen'];
   $id_api = $_POST['id_api'];
 
-  $query = "INSERT INTO elementos (id_coleccion, id_usuario, titulo, autor, imagen, id_api) VALUES ('$id_coleccion', '$id_usuario', '$titulo', '$autor', $imagen', '$id_api')";
+  $query = "INSERT INTO elementos (id_coleccion, id_usuario, titulo, autor, imagen, id_api) VALUES ('$id_coleccion', '$id_usuario', '$titulo', '$autor', '$imagen', '$id_api')";
   $result = mysqli_query($connect, $query);
 
   if ($result) {
