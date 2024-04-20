@@ -5,35 +5,12 @@ header('Content-Type: application/json');
 
 include('./connection.php');
 
-if (!isset($_GET['id_usuario']) || !isset($_GET['coleccion'])) {
-  $response = ['success' => false, 'message' => 'id_usuario and coleccion are required'];
+if (!isset($_GET['id_usuario']) || !isset($_GET['id_coleccion'])) {
+  $response = ['success' => false, 'message' => 'id_usuario and id_coleccion are required'];
 } else {
 
   $id_usuario = $_GET['id_usuario'];
-  $coleccion = $_GET['coleccion'];
-  $id_coleccion = 0;
-
-  switch ($coleccion) {
-    case 'Libros':
-      $id_coleccion = 1;
-      break;
-    
-    case 'Libros favoritos':
-      $id_coleccion = 2;
-      break;
-    
-    case 'Películas':
-      $id_coleccion = 3;
-      break;
-    
-    case 'Películas favoritas':
-      $id_coleccion = 4;
-      break;
-    
-    default:
-      $id_coleccion = 0;
-      break;
-  }
+  $id_coleccion = $_GET['id_coleccion'];
 
   // Construir la consulta SQL sin el campo 'favorito' si no se pasa en la URL
   if (isset($_GET['favorito'])) {
