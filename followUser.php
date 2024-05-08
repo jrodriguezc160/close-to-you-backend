@@ -6,18 +6,18 @@ header('Content-Type: application/json');
 include('./connection.php');
 
 if (!isset($_POST['follower_id']) || !isset($_POST['followed_id'])) {
-  $response = ['success' => false, 'message' => 'id_usuario and contenido are required'];
+  $response = ['success' => false, 'message' => 'follower_id and followed_id are required'];
 } else {
-  $id_usuario = $_POST['id_usuario'];
-  $contenido = $_POST['contenido'];
+  $follower_id = $_POST['follower_id'];
+  $followed_id = $_POST['followed_id'];
 
-  $query = "INSERT INTO publicaciones (id_usuario, contenido) VALUES ('$id_usuario', '$contenido')";
+  $query = "INSERT INTO siguiendo (usuario_seguido, seguidor) VALUES ('$followed_id', '$follower_id')";
   $result = mysqli_query($connect, $query);
 
   if ($result) {
-    $response = ['success' => true, 'message' => 'Publicacion added successfully'];
+    $response = ['success' => true, 'message' => 'User follower successfully'];
   } else {
-    $response = ['success' => false, 'message' => 'Something went wrong while adding the publicación'];
+    $response = ['success' => false, 'message' => 'Something went wrong while following the user'];
   }
 }
 
