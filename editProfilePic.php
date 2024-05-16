@@ -8,9 +8,8 @@ include('./connection.php');
 if (!isset($_POST['id']) || !isset($_POST['foto_perfil'])) {
   $response = ['success' => false, 'message' => 'id and foto_perfil are required'];
 } else {
-  
+  // Variables
   $id = $_POST['id'];
-
   $foto_perfil = $_POST['foto_perfil'];
 
   $query = "UPDATE usuarios set foto_perfil = '$foto_perfil' where id='$id'";
