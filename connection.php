@@ -2,9 +2,8 @@
 
 $host = 'fdb1034.awardspace.net';  // Host de la base de datos proporcionado por tu proveedor
 $user = '4472287_closetoyou';      // Usuario de la base de datos proporcionado
-$password = 'Camavinga12!';  // Sustituye 'your_password_here' por tu contraseña real
+$password = 'Camavinga12!';        // Contraseña
 $db = '4472287_closetoyou';        // Nombre de la base de datos proporcionado
-
 
 $connect = new mysqli($host, $user, $password, $db);
 
