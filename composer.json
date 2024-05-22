@@ -1,0 +1,14 @@
+{
+    "name": "close-to-you/authentication",
+    "description": "Autenticación del usuario actual en la aplicación",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    },
+    "authors": [
+        {
+            "name": "Javier Rodríguez",
+            "email": "jrcortes02102005@gmail.com"
+        }
+    ]
+}
