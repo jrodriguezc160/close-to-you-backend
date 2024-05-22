@@ -24,7 +24,6 @@ if ($result) {
             'apellido2' => $row['apellido2'],
             'fecha_nacimiento' => $row['fecha_nacimiento'],
             'foto_perfil' => $row['foto_perfil'],
-            'banner' => $row['banner'],
             'descripcion' => $row['descripcion']
         ];
     }
