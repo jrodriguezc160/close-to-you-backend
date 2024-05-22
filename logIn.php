@@ -1,11 +1,10 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Content-Type: application/json');
 
-// Incluye el autoload de Composer
 require 'vendor/autoload.php';
 
 use Firebase\JWT\JWT;
@@ -15,12 +14,10 @@ include('./connection.php');
 $response = [];
 
 try {
-    // Comprueba si la solicitud es POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Método no permitido');
     }
 
-    // Obtiene los datos enviados en el cuerpo de la solicitud
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (!isset($data['usuario']) || !isset($data['passwd'])) {
@@ -30,7 +27,6 @@ try {
     $usuario = $data['usuario'];
     $passwd = $data['passwd'];
 
-    // Consulta preparada para verificar usuario y contraseña
     $query = "SELECT id FROM usuarios WHERE usuario = ? AND passwd = ?";
     $stmt = mysqli_prepare($connect, $query);
 
@@ -44,17 +40,16 @@ try {
 
     if ($result) {
         if ($row = mysqli_fetch_assoc($result)) {
-            // Generar token JWT
             $userId = $row['id'];
-            $key = 'your_secret_key'; // Cambia esto por tu clave secreta
+            $key = 'your_secret_key';
             $payload = [
                 'userId' => $userId,
                 'iat' => time(),
-                'exp' => time() + (60 * 60) // Token expira en 1 hora
+                'exp' => time() + (60 * 60)
             ];
-            $token = JWT::encode($payload, $key);
+            $alg = 'HS256'; // Algoritmo de codificación
+            $token = JWT::encode($payload, $key, $alg); // Añadir el tercer argumento
 
-            // Devolver el token junto con el éxito de inicio de sesión
             $response = ['success' => true, 'message' => 'Inicio de sesión exitoso', 'token' => $token];
         } else {
             $response = ['success' => false, 'message' => 'Usuario o contraseña incorrectos'];
