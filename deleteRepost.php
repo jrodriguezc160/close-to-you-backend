@@ -21,9 +21,9 @@ if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
   $result = $stmt->execute();
 
   if ($result) {
-    $response = ['success' => true, 'message' => 'Like eliminado correctamente'];
+    $response = ['success' => true, 'message' => 'Repost eliminado correctamente'];
   } else {
-    $response = ['success' => false, 'message' => 'Error al eliminar el like'];
+    $response = ['success' => false, 'message' => 'Error al eliminar el repost'];
   }
 
   $stmt->close();

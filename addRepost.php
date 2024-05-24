@@ -21,9 +21,9 @@ if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
   $result = $stmt->execute();
 
   if ($result) {
-    $response = ['success' => true, 'message' => 'Like añadido correctamente'];
+    $response = ['success' => true, 'message' => 'Repost añadido correctamente'];
   } else {
-    $response = ['success' => false, 'message' => 'Error al añadir el like'];
+    $response = ['success' => false, 'message' => 'Error al añadir el repost'];
   }
 
   $stmt->close();

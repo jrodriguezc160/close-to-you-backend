@@ -23,9 +23,9 @@ if (!isset($_GET['id_usuario']) || !isset($_GET['id_publicacion'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     $row = mysqli_fetch_assoc($result);
-    $hasLiked = $row['count'] > 0;
+    $hasReposted = $row['count'] > 0;
 
-    $response = ['success' => true, 'hasLiked' => $hasLiked];
+    $response = ['success' => true, 'hasReposted' => $hasReposted];
 }
 
 echo json_encode($response);
