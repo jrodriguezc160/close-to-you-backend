@@ -16,7 +16,7 @@ if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
   $id_publicacion = $_POST['id_publicacion'];
 
   // Consulta preparada para evitar inyección SQL
-  $stmt = $connect->prepare("DELETE FROM likes WHERE id_usuario = '$id_usuario' AND id_publicacion = '$id_publicacion'");
+  $stmt = $connect->prepare("DELETE FROM likes WHERE id_usuario = ? AND id_publicacion = ?");
   $stmt->bind_param("ii", $id_usuario, $id_publicacion);
   $result = $stmt->execute();
 

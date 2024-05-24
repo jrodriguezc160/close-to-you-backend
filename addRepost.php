@@ -16,7 +16,7 @@ if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
   $id_publicacion = $_POST['id_publicacion'];
 
   // Consulta preparada para evitar inyección SQL
-  $stmt = $connect->prepare("INSERT INTO reposts (id_usuario, id_publicacion) VALUES ('$id_usuario', '$id_publicacion')");
+  $stmt = $connect->prepare("INSERT INTO reposts (id_usuario, id_publicacion) VALUES (?, ?)");
   $stmt->bind_param("ii", $id_usuario, $id_publicacion);
   $result = $stmt->execute();
 
