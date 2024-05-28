@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 include('./connection.php');
 
-if (!isset($_GET['nombreMostrado']) || !isset($_GET['usuario']) || !isset($_GET['passwd']) || !isset($_GET['email']) || !isset($_GET['nombre']) || !isset($_GET['ap1']) || !isset($_GET['ap2'])) {
+if (!isset($_GET['nombreMostrado']) || !isset($_GET['usuario']) || !isset($_GET['passwd']) || !isset($_GET['email']) || !isset($_GET['nombre']) || !isset($_GET['ap1'])) {
   $response = ['success' => false, 'message' => 'Usuario, contraseña, nombre mostrado y correo electrónico son requeridos'];
 } else {
   $nombreMostrado = $_GET['nombreMostrado'];
