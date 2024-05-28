@@ -5,15 +5,14 @@ header('Content-Type: application/json');
 
 include('./connection.php');
 
-// Verificar que los parámetros requeridos están presentes
-if (!isset($_GET['nombreMostrado']) || !isset($_GET['usuario']) || !isset($_GET['passwd']) || !isset($_GET['email']) || !isset($_GET['nombre']) || !isset($_GET['ap1'])) {
+// Verificar que los parámetros requeridos están presentes y no están vacíos
+if (empty($_GET['nombreMostrado']) || empty($_GET['usuario']) || empty($_GET['passwd']) || empty($_GET['email']) || empty($_GET['nombre']) || empty($_GET['ap1'])) {
   $response = ['success' => false, 'message' => 'Usuario, contraseña, nombre mostrado y correo electrónico son requeridos'];
 } else {
-  // Asignar valores a las variables y manejar los opcionales
   $nombreMostrado = $_GET['nombreMostrado'];
   $usuario = $_GET['usuario'];
-  $email = $_GET['email'];
   $passwd = $_GET['passwd'];
+  $email = $_GET['email'];
   $nombre = $_GET['nombre'];
   $ap1 = $_GET['ap1'];
   $ap2 = isset($_GET['ap2']) ? $_GET['ap2'] : ''; // Valor por defecto para ap2
@@ -31,11 +30,11 @@ if (!isset($_GET['nombreMostrado']) || !isset($_GET['usuario']) || !isset($_GET[
     if ($result) {
       $response = ['success' => true, 'message' => 'Usuario registrado correctamente'];
     } else {
-      $response = ['success' => false, 'message' => 'Error al registrar el usuario'];
+      $response = ['success' => false, 'message' => 'Error al registrar el usuario: ' . mysqli_error($connect)];
     }
     mysqli_stmt_close($stmt);
   } else {
-    $response = ['success' => false, 'message' => 'Error en la preparación de la consulta'];
+    $response = ['success' => false, 'message' => 'Error en la preparación de la consulta: ' . mysqli_error($connect)];
   }
 }
 
