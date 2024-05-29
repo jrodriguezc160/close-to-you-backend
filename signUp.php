@@ -49,7 +49,7 @@ try {
     mysqli_stmt_close($stmt);
 
     // Inserta el nuevo usuario en la base de datos
-    $query = "INSERT INTO usuarios (nombreMostrado, usuario, passwd, email, nombre, ap1, ap2, fotoPerfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO usuarios (nombre_mostrado, usuario, passwd, email, nombre, apellido1, apellido2, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $query);
 
     if (!$stmt) {
