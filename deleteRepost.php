@@ -1,33 +1,27 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
 include('./connection.php');
 
-// Comprueba si se han recibido los datos necesarios
-if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
-  $response = ['success' => false, 'message' => 'Debes pasar id_usuario e id_publicacion'];
+$id_usuario = $_POST['id_usuario'];
+$id_publicacion = $_POST['id_publicacion'];
+
+// Delete the repost from the reposts table
+$query = "DELETE FROM reposts WHERE id_usuario = '$id_usuario' AND id_publicacion = '$id_publicacion'";
+$result = mysqli_query($connect, $query);
+
+if ($result) {
+  // Update the reposts count in the publicaciones table
+  $updateQuery = "UPDATE publicaciones SET reposts = reposts - 1 WHERE id = '$id_publicacion'";
+  mysqli_query($connect, $updateQuery);
+
+  $response = ['success' => true, 'message' => 'Repost removed successfully'];
 } else {
-  // Obtiene los datos enviados desde el formulario
-  $id_usuario = $_POST['id_usuario'];
-  $id_publicacion = $_POST['id_publicacion'];
-
-  // Consulta preparada para evitar inyección SQL
-  $stmt = $connect->prepare("DELETE FROM reposts WHERE id_usuario = ? AND id_publicacion = ?");
-  $stmt->bind_param("ii", $id_usuario, $id_publicacion);
-  $result = $stmt->execute();
-
-  if ($result) {
-    $response = ['success' => true, 'message' => 'Repost eliminado correctamente'];
-  } else {
-    $response = ['success' => false, 'message' => 'Error al eliminar el repost'];
-  }
-
-  $stmt->close();
+  $response = ['success' => false, 'message' => 'Error removing repost'];
 }
 
 echo json_encode($response);
+exit();
 ?>

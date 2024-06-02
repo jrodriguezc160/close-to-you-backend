@@ -1,33 +1,27 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
 include('./connection.php');
 
-// Comprueba si se han recibido los datos necesarios
-if (!isset($_POST['id_usuario']) || !isset($_POST['id_publicacion'])) {
-  $response = ['success' => false, 'message' => 'Debes pasar id_usuario e id_publicacion'];
+$id_usuario = $_POST['id_usuario'];
+$id_publicacion = $_POST['id_publicacion'];
+
+// Insert the repost into the reposts table
+$query = "INSERT INTO reposts (id_usuario, id_publicacion) VALUES ('$id_usuario', '$id_publicacion')";
+$result = mysqli_query($connect, $query);
+
+if ($result) {
+  // Update the reposts count in the publicaciones table
+  $updateQuery = "UPDATE publicaciones SET reposts = reposts + 1 WHERE id = '$id_publicacion'";
+  mysqli_query($connect, $updateQuery);
+
+  $response = ['success' => true, 'message' => 'Repost added successfully'];
 } else {
-  // Obtiene los datos enviados desde el formulario
-  $id_usuario = $_POST['id_usuario'];
-  $id_publicacion = $_POST['id_publicacion'];
-
-  // Consulta preparada para evitar inyección SQL
-  $stmt = $connect->prepare("INSERT INTO reposts (id_usuario, id_publicacion) VALUES (?, ?)");
-  $stmt->bind_param("ii", $id_usuario, $id_publicacion);
-  $result = $stmt->execute();
-
-  if ($result) {
-    $response = ['success' => true, 'message' => 'Repost añadido correctamente'];
-  } else {
-    $response = ['success' => false, 'message' => 'Error al añadir el repost'];
-  }
-
-  $stmt->close();
+  $response = ['success' => false, 'message' => 'Error adding repost'];
 }
 
 echo json_encode($response);
+exit();
 ?>
