@@ -27,7 +27,8 @@ if (!isset($_GET['id'])) {
       'apellido2' => $row['apellido2'],
       'fecha_nacimiento' => $row['fecha_nacimiento'],
       'foto_perfil' => $row['foto_perfil'],
-      'descripcion' => $row['descripcion']
+      'descripcion' => $row['descripcion'],
+      'admin' => $row['admin']
     );
   }
   
