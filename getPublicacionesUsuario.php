@@ -22,8 +22,7 @@ if (!isset($_GET['id_usuario'])) {
     'id_usuario' => $row['id_usuario'],
     'contenido' => $row['contenido'],
     'fecha' => $row['fecha'],
-    'likes' => $row['likes'],
-    'reposts' => $row['reposts']
+    'likes' => $row['likes']
     );
   }
   

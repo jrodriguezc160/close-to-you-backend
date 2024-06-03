@@ -16,7 +16,7 @@ if (!isset($_POST['id_usuario']) || !isset($_POST['contenido'])) {
   $contenido = $_POST['contenido'];
 
   // Consulta preparada para evitar inyección SQL
-  $stmt = $connect->prepare("INSERT INTO publicaciones (id_usuario, contenido, likes, reposts) VALUES (?, ?, 0, 0)");
+  $stmt = $connect->prepare("INSERT INTO publicaciones (id_usuario, contenido, likes) VALUES (?, ?, 0)");
   $stmt->bind_param("is", $id_usuario, $contenido);
   $result = $stmt->execute();
 
