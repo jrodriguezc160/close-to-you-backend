@@ -17,17 +17,13 @@ try {
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($data['nombreMostrado']) || !isset($data['usuario']) || !isset($data['passwd']) || !isset($data['email']) || !isset($data['nombre']) || !isset($data['ap1']) || !isset($data['ap2'])) {
+    if (!isset($data['usuario']) || !isset($data['passwd']) || !isset($data['email'])) {
         throw new Exception('Todos los campos son requeridos');
     }
 
-    $nombreMostrado = $data['nombreMostrado'];
     $usuario = $data['usuario'];
     $passwd = $data['passwd'];
     $email = $data['email'];
-    $nombre = $data['nombre'];
-    $ap1 = $data['ap1'];
-    $ap2 = $data['ap2'];
     $fotoPerfil = isset($data['fotoPerfil']) ? $data['fotoPerfil'] : '';
 
     // Verifica si el usuario ya existe
@@ -49,14 +45,15 @@ try {
     mysqli_stmt_close($stmt);
 
     // Inserta el nuevo usuario en la base de datos
-    $query = "INSERT INTO usuarios (nombre_mostrado, usuario, passwd, email, nombre, apellido1, apellido2, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO usuarios (nombre_mostrado, usuario, passwd, email, foto_perfil) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $query);
 
     if (!$stmt) {
         throw new Exception('Error en la preparación de la consulta: ' . mysqli_error($connect));
     }
 
-    mysqli_stmt_bind_param($stmt, 'ssssssss', $nombreMostrado, $usuario, $passwd, $email, $nombre, $ap1, $ap2, $fotoPerfil);
+    // Bind parameters: use $usuario for both nombre_mostrado and usuario
+    mysqli_stmt_bind_param($stmt, 'sssss', $usuario, $usuario, $passwd, $email, $fotoPerfil);
     mysqli_stmt_execute($stmt);
 
     if (mysqli_stmt_affected_rows($stmt) > 0) {
